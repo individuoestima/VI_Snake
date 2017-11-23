@@ -1,0 +1,285 @@
+<html>
+
+<head>
+	<title>Snak3D By Estima e Marco</title>
+	<style>
+		canvas {
+			width: 100%;
+			height: 100%
+		}
+	</style>
+</head>
+
+<body>
+	<script src="three.js"></script>
+	<script src="OrbitControls.js"></script>
+	<script src="snake.js"></script>
+	<script>
+		var scene, camera, controls, renderer, cube, cubeGeometry, cubeMaterial, snake, snakeGeometry, snakeMaterial,
+			raf, cubes, renderCounter = 0, speed = 4, food, score = 0;
+
+		var keys = {
+			83: 'backward',
+			87: 'forward',
+			68: 'right',
+			65: 'left'
+		}
+		var keyActions = {
+			'backward': {
+				enabled: true,
+				action: function () {
+					snake.back();
+					keyActions.forward.enabled = false;
+					keyActions.left.enabled = true;
+					keyActions.right.enabled = true;
+				}
+			},
+			'forward': {
+				enabled: true,
+				action: function () {
+					snake.forward();
+					keyActions.backward.enabled = false;
+					keyActions.left.enabled = true;
+					keyActions.right.enabled = true;
+				}
+			},
+			'right': {
+				enabled: true,
+				action: function () {
+					snake.right();
+					keyActions.left.enabled = false;
+					keyActions.forward.enabled = true;
+					keyActions.backward.enabled = true;
+				}
+			},
+			'left': {
+				enabled: true,
+				action: function () {
+					snake.left();
+					keyActions.right.enabled = false;
+					keyActions.backward.enabled = true;
+					keyActions.forward.enabled = true;
+				}
+			}
+		};
+
+		function init() {
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+			controls = new THREE.OrbitControls(camera);
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+			//AmbientLight
+			var lightAmb = new THREE.AmbientLight(0xfffff);
+			scene.add(lightAmb);
+
+			var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+			directionalLight.position.set(-5.5, 0, 6);
+			directionalLight.castShadow = true;
+			scene.add(directionalLight);
+
+			//Make windows resizable
+			window.addEventListener('resize', function () {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			});
+
+			var loader = new THREE.FontLoader();
+			loader.load('fonts/optimer_regular.typeface.json', function (font) {
+				var geometry = new THREE.TextGeometry('SNAK3D', {
+					font: font,
+					size: 4,
+					height: 1.1,
+					curveSegments: 5
+				});
+
+				var material = new THREE.MeshLambertMaterial({ color: 0x0000ff,emissive: 0x00ff00, emissiveIntensity: 1  });
+				var textGeo = new THREE.Mesh(geometry, material);
+
+				textGeo.position.y = 12;
+				textGeo.position.x = -9.5;
+				scene.add(textGeo);
+			});
+
+			camera.position.z = 25;
+
+			//Add Field
+			cubeGeometry = new THREE.BoxGeometry(10, 10, 10);
+			var texloader = new THREE.TextureLoader();
+			var tex = texloader.load("textures/relva.jpg");
+			var material = new THREE.MeshLambertMaterial({ map: tex, color: 0x00ff00 });
+			var cube = new THREE.Mesh(cubeGeometry, material);
+			cube.receiveShadow = true;
+			scene.add(cube);
+
+			//Create Snake
+			snake = new Snake(scene, 0x00ff00);
+			snake.render();
+			snake.onFoodCollision = function () {
+				scene.remove(food);
+				score += 1;
+				var value = Math.floor(Math.random() * 6) + 1;
+				var a = randomAxis();
+				var b = randomAxis();
+				switch (value) {
+					case 1:
+						while (snake.verify(a, b, 5.5)) {
+							a = randomAxis();
+							b = randomAxis();
+						}
+						snake.setFlag('z');
+						food = addFood(a, b, 5.5);
+						break;
+					case 2:
+						while (snake.verify(a, b, -5.5)) {
+							a = randomAxis();
+							b = randomAxis();
+						}
+						snake.setFlag('z');
+						food = addFood(a, b, -5.5);
+						break;
+					case 3:
+						while (snake.verify(a, 5.5, b)) {
+							a = randomAxis();
+							b = randomAxis();
+						} snake.setFlag('y');
+						food = addFood(a, 5.5, b);
+						break;
+					case 4:
+						while (snake.verify(a, -5.5, b)) {
+							a = randomAxis();
+							b = randomAxis();
+						}
+						snake.setFlag('y');
+						food = addFood(a, -5.5, b);
+						break;
+					case 5:
+						while (snake.verify(5.5, a, b)) {
+							a = randomAxis();
+							b = randomAxis();
+						}
+						snake.setFlag('x');
+						food = addFood(5.5, a, b);
+						break;
+					case 6:
+						while (snake.verify(-5.5, a, b)) {
+							a = randomAxis();
+							b = randomAxis();
+						}
+						snake.setFlag('x');
+						food = addFood(5.5, a, b);
+						break;
+				}
+
+			};
+			snake.onSelfCollision = function () {
+				//reload da página
+				window.location.reload(false);
+			};
+
+			//x = 5.5 ou y =5.5 ou z = 5.5
+			food = addFood(3, 3, 5.5);
+
+			cubes = [];
+			var cuboG = new THREE.BoxGeometry(1, 1, 1);
+			var cuboM = new THREE.MeshLambertMaterial({ color: 0xffff99 });
+
+			for (var i = 0; i < 1500; i++) {
+				var xx = Math.random() * 1700 - 500;
+				var yy = Math.random() * 1000 - 500;
+				var zz = Math.random() * 4000 - 3300;
+				cubes[i] = new THREE.Mesh(cuboG, cuboM);
+				cubes[i].position.x = xx;
+				cubes[i].position.y = yy;
+				cubes[i].position.z = zz;
+				scene.add(cubes[i]);
+			};
+		}
+
+		//Food
+		function addFood(x, y, z) {
+			var geometry = new THREE.SphereGeometry(0.5, 10, 10);
+			var texloader = new THREE.TextureLoader();
+			var tex = texloader.load("textures/food.jpg");
+			var material = new THREE.MeshLambertMaterial({ map: tex, color: 0xffffff, emissive: 0xff0000, emissiveIntensity: 0.6 });
+			var sphere = new THREE.Mesh(geometry, material);
+			sphere.castShadow = true;
+			sphere.receiveShadow = true;
+			sphere.position.set(x, y, z);
+			scene.add(sphere);
+			snake.setFoodPosition({ x: x, y: y, z: z });
+			return sphere;
+		}
+
+		function randomAxis() {
+			var num = Math.floor(Math.random() * 4) + 1;
+			num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+			return num
+		}
+
+
+
+		//Render
+		function render() {
+			requestAnimationFrame(render);
+
+			for (var i = 0; i < cubes.length; i++) {
+				cubes[i].rotation.x += 0.05;
+				cubes[i].rotation.y += 0.05;
+			}
+
+			renderer.autoClear = false;
+			renderer.clear();
+			renderer.render(scene, camera);
+			//renderer.setClearColor(0x000000, 1);
+			controls.update();
+
+			// score board
+			var text2 = document.createElement('div');
+			text2.style.position = 'absolute';
+			//text2.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
+			text2.style.width = 120;
+			text2.style.centerline;
+			text2.style.height = 28;
+			text2.style.backgroundColor = "white";
+			text2.innerHTML = ("Score : " + score).bold().fontsize("5px");
+			text2.style.top = 10 + 'px';
+			text2.style.right = 1 + 'px';
+			document.body.appendChild(text2);
+		}
+
+		function onKeyPress(e) {
+			var keyAction = keyActions[keys[e.keyCode]];
+			if (keyAction && keyAction.enabled) {
+				keyAction.action();
+				if (raf) {
+					window.cancelAnimationFrame(raf);
+				}
+				raf = window.requestAnimationFrame(snakeRender);
+			}
+		}
+
+		function snakeRender() {
+			snake.getPos();
+			if (renderCounter === speed) {
+				snake.render();
+				renderCounter = 0;
+			}
+			renderCounter++;
+			raf = window.requestAnimationFrame(snakeRender);
+		}
+
+		//calls to functions
+		init();
+		render();
+		document.addEventListener('keydown', onKeyPress, false);
+
+
+
+	</script>
+</body>
+
+</html>
