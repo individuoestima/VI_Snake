@@ -84,13 +84,15 @@
 
 
 			var spotLight = new THREE.SpotLight(0xffffff,0.8);
-			spotLight.position.set(-15, 15, 15);
+			spotLight.position.set(-20, 20, 25);
 			spotLight.angle=0.7;
 			spotLight.castShadow=true;
 			scene.add(spotLight);
 
 			//var spotLightHelper = new THREE.SpotLightHelper(spotLight);
 			//scene.add(spotLightHelper);
+
+			createSun(-30,20,30);
 
 			//Make windows resizable
 			window.addEventListener('resize', function () {
@@ -126,8 +128,6 @@
 			var cube = new THREE.Mesh(cubeGeometry, material);
 			cube.receiveShadow = true;
 			scene.add(cube);
-
-			createSun(-20,15,18);
 
 			//Create Snake
 			snake = new Snake(scene, 0x00ff00);
