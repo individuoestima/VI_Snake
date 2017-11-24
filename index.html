@@ -16,7 +16,14 @@
 	<script src="snake.js"></script>
 	<script>
 		var scene, camera, controls, renderer, cube, cubeGeometry, cubeMaterial, snake, snakeGeometry, snakeMaterial,
-			raf, cubes, renderCounter = 0, speed = 4, food, score = 0, max_score = 0;
+			raf, cubes, renderCounter = 0, speed = 4, food, score = 0;
+
+		var max_score = 0;
+
+		if (localStorage.getItem("maxScore") != null) {
+            max_score = localStorage.getItem("maxScore");
+        }
+
 		var keys = {
 			83: 'backward',
 			87: 'forward',
@@ -281,6 +288,7 @@
 			if (score > max_score)
 			{
 			    max_score = score;
+			    localStorage.setItem("maxScore", max_score);
 			}
             // score board
             var text3 = document.createElement('div');
