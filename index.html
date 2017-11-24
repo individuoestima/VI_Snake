@@ -82,15 +82,15 @@
 			directionalLight.castShadow = true;
 			scene.add(directionalLight);*/
 
-			
+
 			var spotLight = new THREE.SpotLight(0xffffff,0.8);
 			spotLight.position.set(-15, 15, 15);
 			spotLight.angle=0.7;
 			spotLight.castShadow=true;
 			scene.add(spotLight);
 
-			var spotLightHelper = new THREE.SpotLightHelper(spotLight);
-			scene.add(spotLightHelper);
+			//var spotLightHelper = new THREE.SpotLightHelper(spotLight);
+			//scene.add(spotLightHelper);
 
 			//Make windows resizable
 			window.addEventListener('resize', function () {
@@ -126,6 +126,8 @@
 			var cube = new THREE.Mesh(cubeGeometry, material);
 			cube.receiveShadow = true;
 			scene.add(cube);
+
+			createSun(-20,15,18);
 
 			//Create Snake
 			snake = new Snake(scene, 0x00ff00);
@@ -224,6 +226,18 @@
 			snake.setFoodPosition({ x: x, y: y, z: z });
 			return sphere;
 		}
+
+		function createSun(x,y,z){
+			var geometry = new THREE.SphereGeometry(5, 10, 10);
+			var texloader = new THREE.TextureLoader();
+			var tex = texloader.load("textures/blue.jpg");
+			var material = new THREE.MeshLambertMaterial({ map: tex, color: 0xffa500, emissive: 0xffa500, emissiveIntensity: 1 });
+			var sphere = new THREE.Mesh(geometry, material);
+			sphere.castShadow = true;
+			sphere.position.set(x, y, z);
+			scene.add(sphere);
+		}
+
 
 		function randomAxis() {
 			var num = Math.floor(Math.random() * 4) + 1;
