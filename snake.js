@@ -89,7 +89,6 @@ Snake.prototype = {
 	createCube(position) {
 		var cube = new THREE.Mesh(this.geometry, this.material);
 		cube.castShadow = true;
-		cube.receiveShadow = true;
 		return cube;
 	},
 	addCube() {
