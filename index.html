@@ -16,8 +16,7 @@
 	<script src="snake.js"></script>
 	<script>
 		var scene, camera, controls, renderer, cube, cubeGeometry, cubeMaterial, snake, snakeGeometry, snakeMaterial,
-			raf, cubes, renderCounter = 0, speed = 4, food, score = 0;
-
+			raf, cubes, renderCounter = 0, speed = 4, food, score = 0, max_score = 0;
 		var keys = {
 			83: 'backward',
 			87: 'forward',
@@ -198,6 +197,7 @@
 			};
 			snake.onSelfCollision = function () {
 				//reload da página
+				alert("Perdeste. Jogar de novo?")
 				window.location.reload(false);
 			};
 
@@ -208,10 +208,10 @@
 			var cuboG = new THREE.BoxGeometry(1, 1, 1);
 			var cuboM = new THREE.MeshLambertMaterial({ color: 0xffff99 });
 
-			for (var i = 0; i < 1500; i++) {
-				var xx = Math.random() * 1700 - 500;
-				var yy = Math.random() * 1000 - 500;
-				var zz = Math.random() * 4000 - 3300;
+			for (var i = 0; i < 1350; i++) {
+				var xx = Math.random() * 1700 - 800;
+				var yy = Math.random() * 1000 - 700;
+				var zz = Math.random() * 3000 - 2400;
 				cubes[i] = new THREE.Mesh(cuboG, cuboM);
 				cubes[i].position.x = xx;
 				cubes[i].position.y = yy;
@@ -245,14 +245,11 @@
 			scene.add(sphere);
 		}
 
-
 		function randomAxis() {
 			var num = Math.floor(Math.random() * 5) + 1;
 			num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
 			return num
 		}
-
-
 
 		//Render
 		function render() {
@@ -280,6 +277,22 @@
 			text2.style.top = 10 + 'px';
 			text2.style.right = 1 + 'px';
 			document.body.appendChild(text2);
+
+			if (score > max_score)
+			{
+			    max_score = score;
+			}
+            // score board
+            var text3 = document.createElement('div');
+            text3.style.position = 'absolute';
+            text2.style.width = 120;
+            text3.style.centerline;
+            text3.style.height = 28;
+            text3.style.backgroundColor = "white";
+            text3.innerHTML = ("High Score : " + max_score).bold().fontsize("5px");
+            text3.style.top = 10 + 'px';
+            text3.style.left = 9 + 'px';
+            document.body.appendChild(text3);
 		}
 
 		function onKeyPress(e) {
