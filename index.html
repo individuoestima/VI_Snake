@@ -83,16 +83,16 @@
 			scene.add(directionalLight);*/
 
 
-			var spotLight = new THREE.SpotLight(0xffffff,0.8);
+			var spotLight = new THREE.SpotLight(0xffffff, 0.8);
 			spotLight.position.set(-20, 20, 25);
-			spotLight.angle=0.7;
-			spotLight.castShadow=true;
+			spotLight.angle = 0.7;
+			spotLight.castShadow = true;
 			scene.add(spotLight);
 
 			//var spotLightHelper = new THREE.SpotLightHelper(spotLight);
 			//scene.add(spotLightHelper);
 
-			createSun(-30,20,30);
+			createSun(-30, 20, 30);
 
 			//Make windows resizable
 			window.addEventListener('resize', function () {
@@ -119,6 +119,13 @@
 			});
 
 			camera.position.z = 25;
+
+			var music = new Audio('music.mp3');
+			music.addEventListener('ended', function () {
+				this.currentTime = 0;
+				this.play();
+			}, false);
+			music.play();
 
 			//Add Field
 			cubeGeometry = new THREE.BoxGeometry(10, 10, 10);
@@ -227,7 +234,7 @@
 			return sphere;
 		}
 
-		function createSun(x,y,z){
+		function createSun(x, y, z) {
 			var geometry = new THREE.SphereGeometry(5, 10, 10);
 			var texloader = new THREE.TextureLoader();
 			var tex = texloader.load("textures/blue.jpg");
