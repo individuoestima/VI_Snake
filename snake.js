@@ -17,9 +17,8 @@ function Snake(scene, color) {
 
 	this.onSelfCollision = function () { };
 	this.onFoodCollision = function () { };
-
-	this.position = null; // current position of the snake instance
-	this.foodPosition = null; // the current position of the tag to be hit
+	
+	this.foodPosition = null;
 
 	this.geometry = new THREE.BoxGeometry(this.size, this.size, this.size);
 	var texloader = new THREE.TextureLoader();
