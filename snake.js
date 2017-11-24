@@ -17,7 +17,7 @@ function Snake(scene, color) {
 
 	this.onSelfCollision = function () { };
 	this.onFoodCollision = function () { };
-	
+
 	this.foodPosition = null;
 
 	this.geometry = new THREE.BoxGeometry(this.size, this.size, this.size);
@@ -93,6 +93,9 @@ Snake.prototype = {
 	addCube() {
 		this.snake.push(this.createCube());
 	},
+	renderCube(cube) {
+		this.scene.add(cube)
+	},
 	render() {
 		var self = this;
 		var next = null;
@@ -103,10 +106,8 @@ Snake.prototype = {
 					next = { x: cube.position.x, y: cube.position.y, z: cube.position.z };
 					cube.position[self.axis] += (self.direction * self.distance);
 					self.position = { x: cube.position.x, y: cube.position.y, z: cube.position.z };
-					if (self.foodPosition) {
-						if (self.itFood(self.position, self.foodPosition)) {
-							self.foodCollision();
-						}
+					if (self.itFood(self.position, self.foodPosition)) {
+						self.foodCollision();
 					}
 				} else {
 					temp = { x: cube.position.x, y: cube.position.y, z: cube.position.z };
@@ -120,7 +121,7 @@ Snake.prototype = {
 				}
 			}
 
-			//create snake in the beggining
+			//render body
 			self.renderCube(cube);
 		});
 	},
@@ -145,9 +146,6 @@ Snake.prototype = {
 		this.axis = this.dir[0];
 		this.direction = -1;
 
-	},
-	renderCube(cube) {
-		this.scene.add(cube)
 	},
 	getPos() {
 		if (this.snake[0].position.y == 5.5 && this.snake[0].position.z == 5.5 && this.m == 'f') {
