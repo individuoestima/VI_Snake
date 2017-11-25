@@ -127,6 +127,7 @@
 			camera.position.z = 25;
 
 			var music = new Audio('music.mp3');
+			music.volume = 0.3;
 			music.addEventListener('ended', function () {
 				this.currentTime = 0;
 				this.play();
