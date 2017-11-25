@@ -137,17 +137,18 @@ Snake.prototype = {
 		//new
 	},
 	right() {
-		this.m = 'f';
+		this.m = 'r';
 		this.axis = this.dir[0];
 		this.direction = 1;
 	},
 	left() {
-		this.m = 'b';
+		this.m = 'l';
 		this.axis = this.dir[0];
 		this.direction = -1;
 
 	},
 	getPos() {
+		//console.log(this.m)
 		if (this.snake[0].position.y == 5.5 && this.snake[0].position.z == 5.5 && this.m == 'f') {
 			this.forward = function () {
 				this.m = 'f';
@@ -160,12 +161,12 @@ Snake.prototype = {
 				this.direction = 1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
@@ -187,12 +188,12 @@ Snake.prototype = {
 				this.direction = 1;
 			};
 			this.right = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
@@ -216,12 +217,12 @@ Snake.prototype = {
 				this.direction = 1;
 			};
 			this.right = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
@@ -243,12 +244,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
@@ -258,7 +259,7 @@ Snake.prototype = {
 			this.forward();
 		}
 
-		if (this.snake[0].position.y == 5.5 && this.snake[0].position.x == -5.5 && this.m == 'b') {
+		if (this.snake[0].position.y == 5.5 && this.snake[0].position.x == -5.5 && this.m == 'l') {
 			this.forward = function () {
 				this.m = 'b';
 				this.axis = this.dir[1];
@@ -271,12 +272,12 @@ Snake.prototype = {
 			};
 
 			this.right = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
@@ -287,12 +288,12 @@ Snake.prototype = {
 		}
 		if (this.snake[0].position.y == 5.5 && this.snake[0].position.x == -5.5 && this.m == 'f') {
 			this.forward = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.back = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
@@ -313,7 +314,7 @@ Snake.prototype = {
 			this.forward();
 		}
 
-		if (this.snake[0].position.y == 5.5 && this.snake[0].position.x == 5.5 && this.m == 'f') {
+		if (this.snake[0].position.y == 5.5 && this.snake[0].position.x == 5.5 && this.m == 'r') {
 			this.forward = function () {
 				this.m = 'f';
 				this.axis = this.dir[1];
@@ -326,12 +327,12 @@ Snake.prototype = {
 			};
 
 			this.right = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
@@ -343,12 +344,12 @@ Snake.prototype = {
 
 		if (this.snake[0].position.y == 5.5 && this.snake[0].position.x == 5.5 && this.m == 'b') {
 			this.forward = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.back = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
@@ -383,12 +384,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
@@ -410,12 +411,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
@@ -438,12 +439,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
@@ -465,12 +466,12 @@ Snake.prototype = {
 				this.direction = 1;
 			};
 			this.right = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
@@ -481,7 +482,7 @@ Snake.prototype = {
 		}
 
 
-		if (this.snake[0].position.y == -5.5 && this.snake[0].position.x == 5.5 && this.m == 'b') {
+		if (this.snake[0].position.y == -5.5 && this.snake[0].position.x == 5.5 && this.m == 'l') {
 			this.forward = function () {
 				this.m = 'b';
 				this.axis = this.dir[1];
@@ -493,12 +494,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
@@ -510,12 +511,12 @@ Snake.prototype = {
 
 		if (this.snake[0].position.y == -5.5 && this.snake[0].position.x == 5.5 && this.m == 'f') {
 			this.forward = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.back = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
@@ -536,7 +537,7 @@ Snake.prototype = {
 		}
 
 
-		if (this.snake[0].position.y == -5.5 && this.snake[0].position.x == -5.5 && this.m == 'f') {
+		if (this.snake[0].position.y == -5.5 && this.snake[0].position.x == -5.5 && this.m == 'r') {
 			this.forward = function () {
 				this.m = 'f';
 				this.axis = this.dir[1];
@@ -548,12 +549,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
@@ -562,14 +563,15 @@ Snake.prototype = {
 			keyActions.right.enabled = true;
 			this.forward();
 		}
+
 		if (this.snake[0].position.y == -5.5 && this.snake[0].position.x == -5.5 && this.m == 'b') {
 			this.forward = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.back = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
@@ -590,7 +592,7 @@ Snake.prototype = {
 		}
 
 
-		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == 5.5 && this.m == 'b') {
+		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == 5.5 && this.m == 'l') {
 			this.forward = function () {
 				this.m = 'f';
 				this.axis = this.dir[1];
@@ -602,12 +604,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
@@ -616,7 +618,7 @@ Snake.prototype = {
 			this.left();
 
 		}
-		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == -5.5 && this.m == 'b') {
+		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == -5.5 && this.m == 'l') {
 			this.forward = function () {
 				this.m = 'b';
 				this.axis = this.dir[1];
@@ -628,12 +630,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
@@ -642,7 +644,7 @@ Snake.prototype = {
 			this.left();
 		}
 
-		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == -5.5 && this.m == 'b') {
+		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == -5.5 && this.m == 'l') {
 			this.forward = function () {
 				this.m = 'b';
 				this.axis = this.dir[1];
@@ -654,12 +656,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
@@ -668,7 +670,7 @@ Snake.prototype = {
 			this.left();
 		}
 
-		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == 5.5 && this.m == 'b') {
+		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == 5.5 && this.m == 'l') {
 			this.forward = function () {
 				this.m = 'f';
 				this.axis = this.dir[1];
@@ -680,12 +682,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
@@ -695,7 +697,7 @@ Snake.prototype = {
 		}
 
 
-		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == 5.5 && this.m == 'f') {
+		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == 5.5 && this.m == 'r') {
 			this.forward = function () {
 				this.m = 'b';
 				this.axis = this.dir[1];
@@ -707,12 +709,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
@@ -721,7 +723,7 @@ Snake.prototype = {
 			this.right();
 		}
 
-		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == -5.5 && this.m == 'f') {
+		if (this.snake[0].position.x == 5.5 && this.snake[0].position.z == -5.5 && this.m == 'r') {
 			this.forward = function () {
 				this.m = 'b';
 				this.axis = this.dir[1];
@@ -733,12 +735,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			}; keyActions.right.enabled = true;
@@ -746,7 +748,7 @@ Snake.prototype = {
 			this.right();
 		}
 
-		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == -5.5 && this.m == 'f') {
+		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == -5.5 && this.m == 'r') {
 			this.forward = function () {
 				this.m = 'f';
 				this.axis = this.dir[1];
@@ -758,12 +760,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[2];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[2];
 				this.direction = -1;
 			};
@@ -772,7 +774,7 @@ Snake.prototype = {
 			this.right();
 		}
 
-		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == 5.5 && this.m == 'f') {
+		if (this.snake[0].position.x == -5.5 && this.snake[0].position.z == 5.5 && this.m == 'r') {
 			this.forward = function () {
 				this.m = 'f';
 				this.axis = this.dir[1];
@@ -784,12 +786,12 @@ Snake.prototype = {
 				this.direction = -1;
 			};
 			this.right = function () {
-				this.m = 'f';
+				this.m = 'r';
 				this.axis = this.dir[0];
 				this.direction = 1;
 			};
 			this.left = function () {
-				this.m = 'b';
+				this.m = 'l';
 				this.axis = this.dir[0];
 				this.direction = -1;
 			};
