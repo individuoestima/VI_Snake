@@ -15,21 +15,27 @@
 	<script src="OrbitControls.js"></script>
 	<script src="snake.js"></script>
 	<script>
+
+		//variables
 		var scene, camera, controls, renderer, cube, cubeGeometry, cubeMaterial, snake, snakeGeometry, snakeMaterial,
 			raf, cubes, renderCounter = 0, speed = 3, food, score = 0;
 
 		var max_score = 0;
 
+		//get High Score
 		if (localStorage.getItem("maxScore") != null) {
             max_score = localStorage.getItem("maxScore");
         }
 
+		//Keys to be used
 		var keys = {
 			83: 'backward',
 			87: 'forward',
 			68: 'right',
 			65: 'left'
 		}
+
+		//Key Actions
 		var keyActions = {
 			'backward': {
 				enabled: true,
@@ -69,6 +75,7 @@
 			}
 		};
 
+		//Building the scene
 		function init() {
 			scene = new THREE.Scene();
 			camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
@@ -89,6 +96,7 @@
 			scene.add(directionalLight);*/
 
 
+			//spotlight
 			var spotLight = new THREE.SpotLight(0xffffff, 0.8);
 			spotLight.position.set(-20, 20, 25);
 			spotLight.angle = 0.7;
@@ -98,7 +106,8 @@
 			//var spotLightHelper = new THREE.SpotLightHelper(spotLight);
 			//scene.add(spotLightHelper);
 
-			createSun(-30, 20, 30);
+			//DrawSun
+			drawSun(-30, 20, 30);
 
 			//Make windows resizable
 			window.addEventListener('resize', function () {
@@ -107,6 +116,7 @@
 				renderer.setSize(window.innerWidth, window.innerHeight);
 			});
 
+			//Snak3d floating on top of the field
 			var loader = new THREE.FontLoader();
 			loader.load('fonts/optimer_regular.typeface.json', function (font) {
 				var geometry = new THREE.TextGeometry('SNAK3D', {
@@ -126,6 +136,8 @@
 
 			camera.position.z = 25;
 
+
+			//Add background music
 			var music = new Audio('music.mp3');
 			music.volume = 0.3;
 			music.addEventListener('ended', function () {
@@ -146,9 +158,13 @@
 			//Create Snake
 			snake = new Snake(scene, 0x00ff00);
 			snake.render();
+
+			//Snake hits food
 			snake.onFoodCollision = function () {
 				scene.remove(food);
 				score += 1;
+
+				//get random coordinates
 				var value = Math.floor(Math.random() * 6) + 1;
 				var a = randomAxis();
 				var b = randomAxis();
@@ -203,6 +219,8 @@
 				}
 
 			};
+
+			//Snake hits itself
 			snake.onSelfCollision = function () {
 				//reload da página
 				alert("Perdeste. Jogar de novo?")
@@ -212,6 +230,8 @@
 			//x = 5.5 ou y =5.5 ou z = 5.5
 			food = addFood(3, 3, 5.5);
 
+
+			//Stars
 			cubes = [];
 			var cuboG = new THREE.BoxGeometry(1, 1, 1);
 			var cuboM = new THREE.MeshLambertMaterial({ color: 0xffff99 });
@@ -238,11 +258,14 @@
 			sphere.castShadow = true;
 			sphere.position.set(x, y, z);
 			scene.add(sphere);
+
+			//set food position on object snake
 			snake.setFoodPosition({ x: x, y: y, z: z });
 			return sphere;
 		}
 
-		function createSun(x, y, z) {
+		//Create Sun
+		function drawSun(x, y, z) {
 			var geometry = new THREE.SphereGeometry(5, 10, 10);
 			var texloader = new THREE.TextureLoader();
 			var tex = texloader.load("textures/blue.jpg");
@@ -253,6 +276,7 @@
 			scene.add(sphere);
 		}
 
+		//generate random axis for food spawn
 		function randomAxis() {
 			var num = Math.floor(Math.random() * 5) + 1;
 			num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
@@ -276,7 +300,6 @@
 			// score board
 			var text2 = document.createElement('div');
 			text2.style.position = 'absolute';
-			//text2.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
 			text2.style.width = 120;
 			text2.style.centerline;
 			text2.style.height = 28;
@@ -304,6 +327,7 @@
             document.body.appendChild(text3);
 		}
 
+		//perform action on keypressed
 		function onKeyPress(e) {
 			var keyAction = keyActions[keys[e.keyCode]];
 			if (keyAction && keyAction.enabled) {
@@ -311,21 +335,23 @@
 				if (raf) {
 					window.cancelAnimationFrame(raf);
 				}
-				raf = window.requestAnimationFrame(snakeRender);
+				raf = window.requestAnimationFrame(renderScene);
 			}
 		}
 
-		function snakeRender() {
+		//render the scene
+		function renderScene() {
 			snake.getPos();
+			//control snake speed
 			if (renderCounter === speed) {
 				snake.render();
 				renderCounter = 0;
 			}
 			renderCounter++;
-			raf = window.requestAnimationFrame(snakeRender);
+			raf = window.requestAnimationFrame(renderScene);
 		}
 
-		//calls to functions
+		//start
 		init();
 		render();
 		document.addEventListener('keydown', onKeyPress, false);

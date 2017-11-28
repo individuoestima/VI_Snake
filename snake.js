@@ -24,7 +24,7 @@ function Snake(scene, color) {
 	var texloader = new THREE.TextureLoader();
 	var tex = texloader.load('textures/snake.jpg');
 	this.material = new THREE.MeshLambertMaterial({ map: tex, color: 0xffffff });
-	this.addCube();
+	this.addBody();
 	this.snake.forEach(function (cube) {
 		cube.position.z = 5.5;
 		cube.position.y = 0;
@@ -33,25 +33,31 @@ function Snake(scene, color) {
 }
 
 Snake.prototype = {
+	//Hit itself
 	selfCollision() {
 		this.onSelfCollision();
 	},
+	//Hit food
 	foodCollision() {
 		this.onFoodCollision();
-		this.addCube();
+		this.addBody();
 	},
+	//Set food position
 	setFoodPosition(position) {
 		this.foodPosition = position;
 	},
+	//Flag for food position
 	setFlag(value) {
 		this.flag = value;
 	},
+	//check if snake hits itself
 	itItself(p1, p2) {
 		if (p1.x === p2.x && p1.y === p2.y && p1.z === p2.z) {
 			return true;
 		}
 		return false;
 	},
+	//check if snake hits food
 	itFood(p1, p2) {
 		if (this.flag == 'z') {
 			var d1 = Math.abs(p1.x - p2.x);
@@ -79,23 +85,24 @@ Snake.prototype = {
 		}
 		return false
 	},
+	//check if food will not spawn inside the snake
 	verify(x, y, z) {
 		if (this.snake[0].position.x === x && this.snake[0].position.y === y && this.snake[0].position.z === z) {
 			return true;
 		}
 		return false;
 	},
-	createCube(position) {
+	//increase body
+	addBody() {
 		var cube = new THREE.Mesh(this.geometry, this.material);
 		cube.castShadow = true;
-		return cube;
+		this.snake.push(cube);
 	},
-	addCube() {
-		this.snake.push(this.createCube());
-	},
-	renderCube(cube) {
+	//render body
+	renderBody(cube) {
 		this.scene.add(cube)
 	},
+	//render snake, check if it hits something
 	render() {
 		var self = this;
 		var next = null;
@@ -122,7 +129,7 @@ Snake.prototype = {
 			}
 
 			//render body
-			self.renderCube(cube);
+			self.renderBody(cube);
 		});
 	},
 	back() {
@@ -147,6 +154,7 @@ Snake.prototype = {
 		this.direction = -1;
 
 	},
+	//get current snake position and change movement when needed
 	getPos() {
 		//console.log(this.m)
 		if (this.snake[0].position.y == 5.5 && this.snake[0].position.z == 5.5 && this.m == 'f') {
